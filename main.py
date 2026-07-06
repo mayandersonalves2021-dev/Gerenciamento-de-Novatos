@@ -1,3 +1,4 @@
+import os
 import sqlite3
 from datetime import datetime
 from functools import wraps
@@ -5,11 +6,11 @@ from functools import wraps
 from flask import Flask, g, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
-app.secret_key = "b8653768c9882bcbec636341e136848e1c49c612e732d06d"
+app.secret_key = os.environ.get("CHAVE_SECRETA", "chave-padrao-so-para-teste-local")
 
 DATABASE = "relatos.db"
 
-SENHA_PAINEL = "yas67"
+SENHA_PAINEL = os.environ.get("SENHA_PAINEL", "senha-padrao-so-para-teste-local")
 
 PROBLEMAS_DISPONIVEIS = [
     "OPÇÃO A",
@@ -151,7 +152,4 @@ def finalizar_turno():
 init_db()
 
 if __name__ == "__main__":
-    import os
-
-    port = int(os.environ.get("PORT", 5000))
-    app.run(debug=True, host="0.0.0.0", port=port)
+    app.run(debug=True)
