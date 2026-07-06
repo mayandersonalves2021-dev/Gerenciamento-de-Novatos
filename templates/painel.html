@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+
+{% block title %}Painel de Relatos{% endblock %}
+
+{% block content %}
+    <div class="painel-topo">
+        <h1>Painel de relatos</h1>
+        {% if relatos|length > 0 %}
+            <form method="POST" action="{{ url_for('finalizar_turno') }}"
+                  onsubmit="return confirm('Finalizar turno? Todos os relatos serão apagados permanentemente.');">
+                <button type="submit" class="btn-perigo">Finalizar turno</button>
+            </form>
+        {% endif %}
+    </div>
+
+    {% if relatos|length == 0 %}
+        <p class="subtitulo">Nenhum relato enviado ainda.</p>
+    {% else %}
+        <div class="tabela-wrapper">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Data/Hora</th>
+                        <th>Novato</th>
+                        <th>Turno</th>
+                        <th>Instrutor</th>
+                        <th>Sistema</th>
+                        <th>Problema(s)</th>
+                        <th>Observações</th>
+                        <th>Status</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for relato in relatos %}
+                        <tr class="{{ 'linha-resolvida' if relato['status'] == 'Resolvido' else '' }}">
+                            <td>{{ relato['criado_em'] }}</td>
+                            <td>{{ relato['novato_nome'] }}</td>
+                            <td>{{ relato['turno'] }}</td>
+                            <td>{{ relato['instrutor_nome'] }}</td>
+                            <td>{{ relato['sistema_afetado'] }}</td>
+                            <td>{{ relato['problemas'] }}</td>
+                            <td>{{ relato['observacoes'] or '-' }}</td>
+                            <td>
+                                <span class="status-badge status-{{ relato['status']|lower }}">
+                                    {{ relato['status'] }}
+                                </span>
+                            </td>
+                            <td>
+                                <form method="POST" action="{{ url_for('resolver', relato_id=relato['id']) }}">
+                                    {% if relato['status'] == 'Resolvido' %}
+                                        <input type="hidden" name="acao" value="reabrir">
+                                        <button type="submit" class="btn-secundario">Reabrir</button>
+                                    {% else %}
+                                        <input type="hidden" name="acao" value="resolver">
+                                        <button type="submit" class="btn-primario">Marcar resolvido</button>
+                                    {% endif %}
+                                </form>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+{% endblock %}

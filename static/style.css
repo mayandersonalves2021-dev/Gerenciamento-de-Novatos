@@ -1,0 +1,191 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    background: #f4f5f7;
+    color: #1f2328;
+}
+
+.topbar {
+    background: #1f2937;
+    padding: 16px 24px;
+}
+
+.topbar nav a {
+    color: #f4f5f7;
+    text-decoration: none;
+    margin-right: 24px;
+    font-weight: 600;
+}
+
+.topbar nav a:hover {
+    text-decoration: underline;
+}
+
+.container {
+    max-width: 900px;
+    margin: 32px auto;
+    padding: 0 16px;
+}
+
+h1 {
+    margin-bottom: 4px;
+}
+
+.subtitulo {
+    color: #6b7280;
+    margin-top: 0;
+    margin-bottom: 24px;
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    background: #ffffff;
+    padding: 24px;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.formulario label {
+    font-weight: 600;
+    margin-top: 14px;
+}
+
+.formulario input[type="text"],
+.formulario select,
+.formulario textarea {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 15px;
+}
+
+fieldset.problemas {
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    margin-top: 14px;
+    padding: 12px 16px;
+}
+
+fieldset.problemas legend {
+    font-weight: 600;
+    padding: 0 6px;
+}
+
+.checkbox-opcao {
+    display: block;
+    font-weight: 400;
+    margin: 6px 0;
+}
+
+.checkbox-opcao input {
+    margin-right: 8px;
+}
+
+button, .btn-primario, .btn-secundario {
+    cursor: pointer;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 18px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.formulario button[type="submit"] {
+    margin-top: 20px;
+    background: #2563eb;
+    color: #fff;
+    align-self: flex-start;
+}
+
+.btn-primario {
+    background: #2563eb;
+    color: #fff;
+}
+
+.btn-secundario {
+    background: #e5e7eb;
+    color: #1f2328;
+}
+
+.btn-perigo {
+    background: #dc2626;
+    color: #fff;
+}
+
+.btn-perigo:hover {
+    background: #b91c1c;
+}
+
+.painel-topo {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 4px;
+}
+
+.painel-topo h1 {
+    margin-bottom: 0;
+}
+
+.alerta-sucesso {
+    background: #dcfce7;
+    color: #166534;
+    padding: 10px 14px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+
+.tabela-wrapper {
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    text-align: left;
+    padding: 12px 14px;
+    border-bottom: 1px solid #e5e7eb;
+    white-space: nowrap;
+}
+
+th {
+    background: #f9fafb;
+    font-size: 13px;
+    text-transform: uppercase;
+    color: #6b7280;
+}
+
+.linha-resolvida {
+    background: #f9fafb;
+    color: #9ca3af;
+}
+
+.status-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-pendente {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.status-resolvido {
+    background: #dcfce7;
+    color: #166534;
+}

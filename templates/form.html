@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block title %}Reportar Problema{% endblock %}
+
+{% block content %}
+    <h1>Reportar problema de acesso</h1>
+    <p class="subtitulo">Preencha os dados do novato e marque o(s) problema(s) encontrado(s).</p>
+
+    {% if request.args.get('enviado') %}
+        <div class="alerta-sucesso">Relato enviado com sucesso!</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('enviar') }}" class="formulario">
+        <label for="novato_nome">Nome do novato</label>
+        <input type="text" id="novato_nome" name="novato_nome" required>
+
+        <label for="turno">Turma / Turno</label>
+        <select id="turno" name="turno" required>
+            <option value="" disabled selected>Selecione</option>
+            <option value="Manhã">Manhã</option>
+            <option value="Tarde">Tarde</option>
+        </select>
+
+        <label for="instrutor_nome">Nome do instrutor</label>
+        <input type="text" id="instrutor_nome" name="instrutor_nome" required>
+
+        <label for="sistema_afetado">Sistema/ferramenta afetado</label>
+        <input type="text" id="sistema_afetado" name="sistema_afetado" required>
+
+        <fieldset class="problemas">
+            <legend>Qual o problema?</legend>
+            {% for problema in problemas %}
+                <label class="checkbox-opcao">
+                    <input type="checkbox" name="problemas" value="{{ problema }}">
+                    {{ problema }}
+                </label>
+            {% endfor %}
+        </fieldset>
+
+        <label for="observacoes">Observações adicionais (opcional)</label>
+        <textarea id="observacoes" name="observacoes" rows="3"></textarea>
+
+        <button type="submit">Enviar relato</button>
+    </form>
+{% endblock %}
