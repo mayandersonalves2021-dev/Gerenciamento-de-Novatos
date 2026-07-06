@@ -1,11 +1,15 @@
 import sqlite3
 from datetime import datetime
+from functools import wraps
 
-from flask import Flask, g, redirect, render_template, request, url_for
+from flask import Flask, g, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
+app.secret_key = "b8653768c9882bcbec636341e136848e1c49c612e732d06d"
 
 DATABASE = "relatos.db"
+
+SENHA_PAINEL = "yas67"
 
 PROBLEMAS_DISPONIVEIS = [
     "OPÇÃO A",
@@ -51,6 +55,33 @@ def init_db():
         )
 
 
+def login_obrigatorio(view):
+    @wraps(view)
+    def decorada(*args, **kwargs):
+        if not session.get("autenticado"):
+            return redirect(url_for("login"))
+        return view(*args, **kwargs)
+
+    return decorada
+
+
+@app.route("/painel/login", methods=["GET", "POST"])
+def login():
+    erro = None
+    if request.method == "POST":
+        if request.form.get("senha") == SENHA_PAINEL:
+            session["autenticado"] = True
+            return redirect(url_for("painel"))
+        erro = "Senha incorreta."
+    return render_template("login.html", erro=erro)
+
+
+@app.route("/painel/logout")
+def logout():
+    session.pop("autenticado", None)
+    return redirect(url_for("login"))
+
+
 @app.route("/")
 def formulario():
     return render_template("form.html", problemas=PROBLEMAS_DISPONIVEIS)
@@ -88,6 +119,7 @@ def enviar():
 
 
 @app.route("/painel")
+@login_obrigatorio
 def painel():
     db = get_db()
     relatos = db.execute(
@@ -97,6 +129,7 @@ def painel():
 
 
 @app.route("/painel/resolver/<int:relato_id>", methods=["POST"])
+@login_obrigatorio
 def resolver(relato_id):
     db = get_db()
     novo_status = "Resolvido" if request.form.get("acao") == "resolver" else "Pendente"
@@ -106,6 +139,7 @@ def resolver(relato_id):
 
 
 @app.route("/painel/finalizar_turno", methods=["POST"])
+@login_obrigatorio
 def finalizar_turno():
     db = get_db()
     db.execute("DELETE FROM relatos")

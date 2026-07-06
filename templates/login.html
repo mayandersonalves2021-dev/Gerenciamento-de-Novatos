@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+
+{% block title %}Login do Painel{% endblock %}
+
+{% block content %}
+    <h1>Login do painel</h1>
+    <p class="subtitulo">Acesso restrito à gerente.</p>
+
+    {% if erro %}
+        <div class="alerta-erro">{{ erro }}</div>
+    {% endif %}
+
+    <form method="POST" action="{{ url_for('login') }}" class="formulario">
+        <label for="senha">Senha</label>
+        <input type="password" id="senha" name="senha" required autofocus>
+
+        <button type="submit">Entrar</button>
+    </form>
+{% endblock %}

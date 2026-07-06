@@ -5,12 +5,15 @@
 {% block content %}
     <div class="painel-topo">
         <h1>Painel de relatos</h1>
-        {% if relatos|length > 0 %}
-            <form method="POST" action="{{ url_for('finalizar_turno') }}"
-                  onsubmit="return confirm('Finalizar turno? Todos os relatos serão apagados permanentemente.');">
-                <button type="submit" class="btn-perigo">Finalizar turno</button>
-            </form>
-        {% endif %}
+        <div class="painel-acoes">
+            {% if relatos|length > 0 %}
+                <form method="POST" action="{{ url_for('finalizar_turno') }}"
+                      onsubmit="return confirm('Finalizar turno? Todos os relatos serão apagados permanentemente.');">
+                    <button type="submit" class="btn-perigo">Finalizar turno</button>
+                </form>
+            {% endif %}
+            <a href="{{ url_for('logout') }}" class="btn-secundario">Sair</a>
+        </div>
     </div>
 
     {% if relatos|length == 0 %}
