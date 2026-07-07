@@ -8,7 +8,7 @@ from flask import Flask, g, redirect, render_template, request, session, url_for
 app = Flask(__name__)
 app.secret_key = os.environ.get("CHAVE_SECRETA", "chave-padrao-so-para-teste-local")
 
-DATABASE = "relatos.db"
+DATABASE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "relatos.db")
 
 SENHA_PAINEL = os.environ.get("SENHA_PAINEL", "senha-padrao-so-para-teste-local")
 
